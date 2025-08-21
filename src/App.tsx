@@ -58,6 +58,7 @@ function App() {
                 searchable
                 value={namesSpindown}
                 onChange={setNamesSpindown}
+                limit={50}
               />
               {namesSpindown.length === 0 && <ItemNeighbors index={-1} />}
               {namesSpindown.map((name) => (
@@ -79,6 +80,7 @@ function App() {
                 searchable
                 value={namesFloor}
                 onChange={setNamesFloor}
+                limit={50}
               />
               {namesFloor.map((name) => {
                 const floorIndex = indicesByNames[name];
