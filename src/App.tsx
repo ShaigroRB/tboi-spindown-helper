@@ -1,4 +1,7 @@
 import {
+  AppShell,
+  Avatar,
+  Box,
   Center,
   Container,
   Divider,
@@ -7,12 +10,15 @@ import {
   MultiSelect,
   Stack,
   Text,
+  Title,
   type MultiSelectProps,
 } from "@mantine/core";
 import { ItemNeighbors } from "./ItemNeighbors";
 import items from "./assets/items.json";
 import { useMemo, useState } from "react";
 import { Item } from "./Item";
+import { WantedPanel } from "./WantedPanel";
+import { FloorPanel } from "./FloorPanel";
 
 const indicesByNames = items.reduce(
   (acc, item, index) => {
@@ -35,81 +41,130 @@ const renderMultiSelectOption: MultiSelectProps["renderOption"] = ({
   </Group>
 );
 
+// function App() {
+//   const availableNames = useMemo(() => {
+//     return items.map((item) => item.name);
+//   }, []);
+//   const [namesSpindown, setNamesSpindown] = useState<string[]>([]);
+//   const [namesFloor, setNamesFloor] = useState<string[]>([]);
+
+//   return (
+//     <Container fluid style={{ textAlign: "center" }}>
+//       <h1>TBOI spindown helper</h1>
+//       <Group mx="xl" justify="space-between" gap="sm">
+//         <section>
+//           <h2>Items to spindown into</h2>
+//           <Center>
+//             <Stack>
+//               <MultiSelect
+//                 renderOption={renderMultiSelectOption}
+//                 label="Items wanted"
+//                 placeholder="Pick items"
+//                 data={availableNames}
+//                 searchable
+//                 value={namesSpindown}
+//                 onChange={setNamesSpindown}
+//                 limit={50}
+//               />
+//               {namesSpindown.length === 0 && <ItemNeighbors index={-1} />}
+//               {namesSpindown.map((name) => (
+//                 <ItemNeighbors key={name} index={indicesByNames[name]} />
+//               ))}
+//             </Stack>
+//           </Center>
+//         </section>
+//         <Divider orientation="vertical" size="xl" />
+//         <section>
+//           <h2>Available items on the floor</h2>
+//           <Center>
+//             <Stack>
+//               <MultiSelect
+//                 renderOption={renderMultiSelectOption}
+//                 label="Items on the floor"
+//                 placeholder="Pick items"
+//                 data={availableNames}
+//                 searchable
+//                 value={namesFloor}
+//                 onChange={setNamesFloor}
+//                 limit={50}
+//               />
+//               {namesFloor.map((name) => {
+//                 const floorIndex = indicesByNames[name];
+//                 return (
+//                   <Group key={floorIndex}>
+//                     <Item index={floorIndex} />{" "}
+//                     <Divider orientation="vertical" />{" "}
+//                     {namesSpindown.length === 0 && "Pick 1 item wanted"}
+//                     <Stack gap="0px">
+//                       {namesSpindown.map((spindown) => {
+//                         const spindownIndex = indicesByNames[spindown];
+//                         const diff = floorIndex - spindownIndex;
+
+//                         return diff < 0 ? null : (
+//                           <Group>
+//                             <Item index={spindownIndex} inline />
+//                             <span>: {diff} spindown</span>
+//                           </Group>
+//                         );
+//                       })}
+//                     </Stack>
+//                   </Group>
+//                 );
+//               })}
+//             </Stack>
+//           </Center>
+//         </section>
+//       </Group>
+//     </Container>
+//   );
+// }
+
 function App() {
-  const availableNames = useMemo(() => {
-    return items.map((item) => item.name);
-  }, []);
-  const [namesSpindown, setNamesSpindown] = useState<string[]>([]);
-  const [namesFloor, setNamesFloor] = useState<string[]>([]);
-
   return (
-    <Container fluid style={{ textAlign: "center" }}>
-      <h1>TBOI spindown helper</h1>
-      <Group mx="xl" justify="space-between" gap="sm">
-        <section>
-          <h2>Items to spindown into</h2>
-          <Center>
-            <Stack>
-              <MultiSelect
-                renderOption={renderMultiSelectOption}
-                label="Items wanted"
-                placeholder="Pick items"
-                data={availableNames}
-                searchable
-                value={namesSpindown}
-                onChange={setNamesSpindown}
-                limit={50}
-              />
-              {namesSpindown.length === 0 && <ItemNeighbors index={-1} />}
-              {namesSpindown.map((name) => (
-                <ItemNeighbors key={name} index={indicesByNames[name]} />
-              ))}
-            </Stack>
-          </Center>
-        </section>
-        <Divider orientation="vertical" size="xl" />
-        <section>
-          <h2>Available items on the floor</h2>
-          <Center>
-            <Stack>
-              <MultiSelect
-                renderOption={renderMultiSelectOption}
-                label="Items on the floor"
-                placeholder="Pick items"
-                data={availableNames}
-                searchable
-                value={namesFloor}
-                onChange={setNamesFloor}
-                limit={50}
-              />
-              {namesFloor.map((name) => {
-                const floorIndex = indicesByNames[name];
-                return (
-                  <Group key={floorIndex}>
-                    <Item index={floorIndex} />{" "}
-                    <Divider orientation="vertical" />{" "}
-                    {namesSpindown.length === 0 && "Pick 1 item wanted"}
-                    <Stack gap="0px">
-                      {namesSpindown.map((spindown) => {
-                        const spindownIndex = indicesByNames[spindown];
-                        const diff = floorIndex - spindownIndex;
+    <AppShell header={{ height: 60 }} padding={0}>
+      <AppShell.Header bg="gray.9" px="md">
+        <Group gap="sm" align="center" h="100%">
+          <Avatar
+            style={(theme) => ({
+              border: `1px solid ${theme.colors.gray[4]}`,
+            })}
+            src="/items/708.png"
+            alt="spindown dice"
+            bg="gray"
+          />
+          <Stack gap="0">
+            <Title order={1} size="h4">
+              TBOI spindown helper
+            </Title>
+            <Text size="xs" c="dimmed">
+              Repentance
+            </Text>
+          </Stack>
+        </Group>
+      </AppShell.Header>
 
-                        return diff < 0 ? null : (
-                          <Group>
-                            <Item index={spindownIndex} inline />
-                            <span>: {diff} spindown</span>
-                          </Group>
-                        );
-                      })}
-                    </Stack>
-                  </Group>
-                );
-              })}
-            </Stack>
-          </Center>
-        </section>
-      </Group>
-    </Container>
+      <AppShell.Main>
+        <Box
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            height: "calc(100vh - 52px)",
+          }}
+        >
+          <Box
+            style={(theme) => ({
+              borderRight: `1px solid ${theme.colors.gray[2]}`,
+            })}
+          >
+            <WantedPanel />
+          </Box>
+
+          <Box>
+            <FloorPanel />
+          </Box>
+        </Box>
+      </AppShell.Main>
+    </AppShell>
   );
 }
 
