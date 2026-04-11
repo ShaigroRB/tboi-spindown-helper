@@ -20,34 +20,6 @@ import { Item } from "./Item";
 import { WantedPanel } from "./WantedPanel";
 import { FloorPanel } from "./FloorPanel";
 
-const indicesByNames = items.reduce(
-  (acc, item, index) => {
-    acc[item.name] = index;
-    return acc;
-  },
-  {} as Record<string, number>,
-);
-
-const renderMultiSelectOption: MultiSelectProps["renderOption"] = ({
-  option,
-}) => (
-  <Group gap="sm">
-    <Image
-      src={`/items/${indicesByNames[option.value] + 1}.png`}
-      h="30px"
-      w="30px"
-    />
-    <Text size="sm">{option.value}</Text>
-  </Group>
-);
-
-// function App() {
-//   const availableNames = useMemo(() => {
-//     return items.map((item) => item.name);
-//   }, []);
-//   const [namesSpindown, setNamesSpindown] = useState<string[]>([]);
-//   const [namesFloor, setNamesFloor] = useState<string[]>([]);
-
 //   return (
 //     <Container fluid style={{ textAlign: "center" }}>
 //       <h1>TBOI spindown helper</h1>
@@ -78,16 +50,6 @@ const renderMultiSelectOption: MultiSelectProps["renderOption"] = ({
 //           <h2>Available items on the floor</h2>
 //           <Center>
 //             <Stack>
-//               <MultiSelect
-//                 renderOption={renderMultiSelectOption}
-//                 label="Items on the floor"
-//                 placeholder="Pick items"
-//                 data={availableNames}
-//                 searchable
-//                 value={namesFloor}
-//                 onChange={setNamesFloor}
-//                 limit={50}
-//               />
 //               {namesFloor.map((name) => {
 //                 const floorIndex = indicesByNames[name];
 //                 return (
@@ -120,6 +82,8 @@ const renderMultiSelectOption: MultiSelectProps["renderOption"] = ({
 // }
 
 function App() {
+  const [lookingForItems, setLookingForItems] = useState<string[]>([]);
+
   return (
     <AppShell header={{ height: 60 }} padding={0}>
       <AppShell.Header bg="gray.9" px="md">
@@ -156,11 +120,14 @@ function App() {
               borderRight: `1px solid ${theme.colors.gray[2]}`,
             })}
           >
-            <WantedPanel />
+            <WantedPanel
+              selectedItems={lookingForItems}
+              onChange={setLookingForItems}
+            />
           </Box>
 
           <Box>
-            <FloorPanel />
+            <FloorPanel lookingFor={lookingForItems} />
           </Box>
         </Box>
       </AppShell.Main>

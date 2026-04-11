@@ -2,14 +2,14 @@ import { Box, Divider, Group, Stack, Text, Title } from "@mantine/core";
 import { ItemSelect } from "./ItemSelect";
 import type { Item } from "./ItemSelect";
 import { EmptyState } from "./components/EmptyState";
-
-const PLACEHOLDER_DATA: Item[] = [];
+import { useState } from "react";
 
 interface FloorPanelProps {
-  data?: Item[];
+  lookingFor: string[];
 }
 
-export function FloorPanel({ data = PLACEHOLDER_DATA }: FloorPanelProps) {
+export function FloorPanel({ lookingFor }: FloorPanelProps) {
+  const [items, setItems] = useState<string[]>([]);
   return (
     <Stack h="100%" gap={0} px="md">
       <Group py="sm">
@@ -22,17 +22,14 @@ export function FloorPanel({ data = PLACEHOLDER_DATA }: FloorPanelProps) {
       </Group>
 
       <Box p="md">
-        <ItemSelect
-          data={data}
-          value={[]}
-          onChange={() => {}}
-          placeholder="Search items..."
-        />
+        <ItemSelect value={items} onChange={setItems} />
       </Box>
 
       <Divider my="sm" />
 
-      <EmptyState hint="Add items from the floor and it'll show you how many spindowns are needed to reach your targets." />
+      {items.length === 0 && (
+        <EmptyState hint="Add items from the floor and it'll show you how many spindowns are needed to reach your targets." />
+      )}
     </Stack>
   );
 }

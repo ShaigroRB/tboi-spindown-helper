@@ -4,13 +4,12 @@ import type { Item } from "./ItemSelect";
 import { EmptyState } from "./components/EmptyState";
 import { LookedForItemSkeleton } from "./LookedForItem";
 
-const PLACEHOLDER_DATA: Item[] = [];
-
 interface WantedPanelProps {
-  data?: Item[];
+  selectedItems: string[];
+  onChange: (v: string[]) => void;
 }
 
-export function WantedPanel({ data = PLACEHOLDER_DATA }: WantedPanelProps) {
+export function WantedPanel({ selectedItems, onChange }: WantedPanelProps) {
   return (
     <Stack h="100%" gap={0} px="md">
       <Group py="sm">
@@ -23,12 +22,7 @@ export function WantedPanel({ data = PLACEHOLDER_DATA }: WantedPanelProps) {
       </Group>
 
       <Box p="md">
-        <ItemSelect
-          data={data}
-          value={[]}
-          onChange={() => {}}
-          placeholder="Search items..."
-        />
+        <ItemSelect value={selectedItems} onChange={onChange} />
       </Box>
 
       <Divider my="sm" />
