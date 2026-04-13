@@ -1,8 +1,7 @@
-import { Box, Divider, Group, Stack, Text, Title } from "@mantine/core";
+import { Divider, Stack, Title } from "@mantine/core";
 import { ItemSelect } from "./ItemSelect";
-import type { Item } from "./ItemSelect";
 import { EmptyState } from "./components/EmptyState";
-import { LookedForItemSkeleton } from "./LookedForItem";
+import { LookedForItem } from "./LookedForItem";
 
 interface WantedPanelProps {
   selectedItems: string[];
@@ -24,9 +23,17 @@ export function WantedPanel({ selectedItems, onChange }: WantedPanelProps) {
 
       <Divider my="sm" />
 
-      <LookedForItemSkeleton name="item" id={52} />
+      {selectedItems.length === 0 && (
+        <EmptyState hint="Add items you're hoping to get and they'll appear here with nearby spindown targets." />
+      )}
 
-      <EmptyState hint="Add items you're hoping to get and they'll appear here with nearby spindown targets." />
+      {selectedItems.length > 0 && (
+        <Stack gap="xs">
+          {selectedItems.map((item) => (
+            <LookedForItem name={item} key={item} />
+          ))}
+        </Stack>
+      )}
     </Stack>
   );
 }

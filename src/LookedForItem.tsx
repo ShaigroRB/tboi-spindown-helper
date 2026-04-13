@@ -1,83 +1,90 @@
-import { Group, Skeleton, Stack, Text, ThemeIcon } from "@mantine/core";
+import { Box, Group, Image, Stack, Text } from "@mantine/core";
 import { IconChevronRight } from "@tabler/icons-react";
+import { itemsNames, getItemSourceFromId, itemIndexByName } from "./utils";
 
-interface LookedForItemSkeletonProps {
-  name: string;
-  id: number;
-}
+const ItemDisplay = ({ id }: { id: number }) => {
+  if (id < 0 || id >= itemsNames.length) {
+    return <span>No item</span>;
+  }
 
-export function LookedForItemSkeleton({
-  name,
-  id,
-}: LookedForItemSkeletonProps) {
+  const name = itemsNames[id];
+  const src = getItemSourceFromId(id);
+
   return (
-    <Stack gap={6}>
-      <Group gap={6} align="center" fs="italic">
+    <Stack gap={3} align="center" style={{ flexShrink: 0 }}>
+      <Image
+        src={src}
+        alt={name}
+        h="60px"
+        w="60px"
+        style={{ borderRadius: 6, imageRendering: "pixelated" }}
+      />
+      <Stack gap="xs" align="center">
         <Text size="sm" fw={500}>
           {name}
         </Text>
         <Text size="sm" c="dimmed">
           #{id}
         </Text>
-      </Group>
-
-      <Group gap={6} align="center" wrap="nowrap">
-        <ItemSkeleton />
-        <Chevron />
-        <ItemSkeleton />
-        <Chevron />
-        <ItemPill name={name} id={id} />
-        <Chevron />
-        <ItemSkeleton />
-        <Chevron />
-        <ItemSkeleton />
-      </Group>
+      </Stack>
     </Stack>
   );
-}
+};
 
-function ItemSkeleton() {
+const TargetItemDisplay = ({ id }: { id: number }) => {
   return (
-    <Stack gap={4} align="center" style={{ flexShrink: 0 }}>
-      <Skeleton height={60} width={60} radius="sm" />
-      <Group w="100%" gap="xs">
-        <Skeleton height={10} width="50%" radius="xs" />
-        <Skeleton height={10} width="30%" radius="xs" />
-      </Group>
-    </Stack>
+    <Box
+      px="md"
+      style={{
+        borderRadius: 8,
+        border: "3px dotted var(--mantine-color-green-4)",
+        flexShrink: 0,
+      }}
+    >
+      <ItemDisplay id={id} />
+    </Box>
   );
-}
+};
 
-function Chevron() {
-  return (
-    <ThemeIcon variant="light" color="gray" size="lg" radius="xl">
-      <IconChevronRight size={16} stroke={1.5} />
-    </ThemeIcon>
-  );
-}
+export const LookedForItem = ({ name }: { name: string }) => {
+  const id = itemIndexByName[name];
 
-function ItemPill({ name, id }: { name: string; id: number }) {
   return (
-    <Stack gap={4} align="center" style={{ flexShrink: 0 }}>
-      <Skeleton
-        style={(theme) => ({
-          width: 60,
-          height: 60,
-          borderRadius: theme.radius.sm,
-          border: `1px solid ${theme.colors.green[4]}`,
-          backgroundColor: theme.colors.green[0],
-        })}
-      >
-        {/* Image will go here */}
-      </Skeleton>
-      <Group gap="xs">
-        <Text size="xs" fw={500} c="green">
-          {name}
-        </Text>
-        <Text size="xs" c="green.6">
+    <Stack
+      gap={6}
+      w="100%"
+      pl="sm"
+      py="2px"
+      style={{
+        borderLeft: "5px solid var(--mantine-color-dark-4)",
+      }}
+    >
+      <Group gap={4} align="center">
+        <Text fw={700}>{name}</Text>
+        <Text fw={700} c="dimmed">
           #{id}
         </Text>
       </Group>
+
+      <Group gap={6} justify="space-between" wrap="nowrap">
+        <ItemDisplay id={id + 2} />
+        <Chevron />
+        <ItemDisplay id={id + 1} />
+        <Chevron />
+        <TargetItemDisplay id={id} />
+        <Chevron />
+        <ItemDisplay id={id - 1} />
+        <Chevron />
+        <ItemDisplay id={id - 2} />
+      </Group>
     </Stack>
   );
-}
+};
+
+const Chevron = () => {
+  return (
+    <Box c="dimmed">
+      <IconChevronRight />
+    </Box>
+  );
+};
