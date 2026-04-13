@@ -31,6 +31,8 @@ export type ItemSelectProps = {
   value: string[];
   /** Called with the new list of ids when selection changes */
   onChange: (value: string[]) => void;
+  /** Label of the select */
+  label: string;
 };
 
 export function ItemSelect(props: ItemSelectProps) {
@@ -38,7 +40,6 @@ export function ItemSelect(props: ItemSelectProps) {
   return (
     <MultiSelect
       renderOption={renderMultiSelectOption}
-      label="Items on the floor"
       placeholder="Search items..."
       data={itemsNames}
       searchable

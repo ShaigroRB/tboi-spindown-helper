@@ -11,19 +11,16 @@ interface FloorPanelProps {
 export function FloorPanel({ lookingFor }: FloorPanelProps) {
   const [items, setItems] = useState<string[]>([]);
   return (
-    <Stack h="100%" gap={0} px="md">
-      <Group py="sm">
-        <Title order={2} size="h3">
-          ON THE FLOOR
-        </Title>
-        <Text size="md" c="dimmed">
-          - Items currently available to pick up
-        </Text>
-      </Group>
+    <Stack h="100%" gap={0} px="md" py="md">
+      <Title order={2} size="h3">
+        ON THE FLOOR
+      </Title>
 
-      <Box p="md">
-        <ItemSelect value={items} onChange={setItems} />
-      </Box>
+      <ItemSelect
+        label="Items currently available to pick up"
+        value={items}
+        onChange={setItems}
+      />
 
       <Divider my="sm" />
 

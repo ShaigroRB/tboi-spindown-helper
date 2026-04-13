@@ -11,19 +11,16 @@ interface WantedPanelProps {
 
 export function WantedPanel({ selectedItems, onChange }: WantedPanelProps) {
   return (
-    <Stack h="100%" gap={0} px="md">
-      <Group py="sm">
-        <Title order={2} size="h3">
-          LOOKING FOR
-        </Title>
-        <Text size="md" c="dimmed">
-          - Items you're trying to spindown into
-        </Text>
-      </Group>
+    <Stack h="100%" gap={0} px="md" py="md">
+      <Title order={2} size="h3">
+        LOOKING FOR
+      </Title>
 
-      <Box p="md">
-        <ItemSelect value={selectedItems} onChange={onChange} />
-      </Box>
+      <ItemSelect
+        label="Items you're trying to spindown into"
+        value={selectedItems}
+        onChange={onChange}
+      />
 
       <Divider my="sm" />
 
