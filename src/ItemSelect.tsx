@@ -9,7 +9,7 @@ import {
   Image,
   Text,
 } from "@mantine/core";
-import { itemIndexByName, itemsNames } from "./utils";
+import { getItemSourceFromName, itemsNames } from "./utils";
 
 export type Item = {
   id: number;
@@ -21,11 +21,7 @@ const renderMultiSelectOption: MultiSelectProps["renderOption"] = ({
   option,
 }) => (
   <Group gap="sm">
-    <Image
-      src={`/items/${itemIndexByName[option.value] + 1}.png`}
-      h="30px"
-      w="30px"
-    />
+    <Image src={getItemSourceFromName(option.value)} h="30px" w="30px" />
     <Text size="sm">{option.value}</Text>
   </Group>
 );
