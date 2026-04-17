@@ -1,5 +1,5 @@
 import { Divider, Stack, Title } from "@mantine/core";
-import { ItemSelect } from "./ItemSelect";
+import { ItemSelect } from "./components/ItemSelect";
 import { EmptyState } from "./components/EmptyState";
 import { LookedForItem } from "./LookedForItem";
 

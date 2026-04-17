@@ -9,7 +9,7 @@ import {
   ThemeIcon,
   Title,
 } from "@mantine/core";
-import { ItemSelect } from "./ItemSelect";
+import { ItemSelect } from "./components/ItemSelect";
 import { EmptyState } from "./components/EmptyState";
 import { useState } from "react";
 import { getItemSourceFromId, itemIndexByName } from "./utils";

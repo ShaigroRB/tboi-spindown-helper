@@ -9,7 +9,7 @@ import {
   Image,
   Text,
 } from "@mantine/core";
-import { getItemSourceFromName, itemsNames } from "./utils";
+import { getItemSourceFromName, itemsNames } from "../utils";
 
 export type Item = {
   id: number;
