@@ -20,3 +20,6 @@ I can get:
 - Book of Shadows via spinning down IV Bag, Revelation or Holy Grail
 
 ![](./docs/screenshot.png)
+
+# Ideas
+- Auto focus on corresponding item select when clicking on empty state
