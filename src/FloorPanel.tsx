@@ -48,8 +48,9 @@ export function FloorPanel({ lookingFor }: FloorPanelProps) {
               matches: computeMatches(item, lookingFor),
             }))
             .sort((a, b) => {
-              if (a.matches.length === b.matches.length) return 0;
-              return a.matches.length > 0 ? -1 : 1;
+              const aMin = a.matches[0]?.spindowns ?? Infinity;
+              const bMin = b.matches[0]?.spindowns ?? Infinity;
+              return aMin - bMin;
             })
             .map(({ item, matches }) => (
               <FloorItem key={item} name={item} matches={matches} />
