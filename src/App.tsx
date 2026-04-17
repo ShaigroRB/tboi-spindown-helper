@@ -45,18 +45,14 @@ function App() {
             height: "calc(100vh - 52px)",
           }}
         >
-          <Box
-            style={(theme) => ({
-              borderRight: `1px solid ${theme.colors.gray[2]}`,
-            })}
-          >
+          <Box style={{ backgroundColor: "var(--mantine-color-dark-8)" }}>
             <WantedPanel
               selectedItems={lookingForItems}
               onChange={setLookingForItems}
             />
           </Box>
 
-          <Box>
+          <Box style={{ backgroundColor: "var(--mantine-color-dark-7)" }}>
             <FloorPanel lookingFor={lookingForItems} />
           </Box>
         </Box>
